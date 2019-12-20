@@ -6,5 +6,5 @@ The function will provide these info.
 vCenter, OS, VM, Name, Description, CreatedTime, CreatedBy, SizeGB
 
 Hope it can help some folks need it.
-If any comments and suggestion, it is welcome.
+Comments and suggestion, it is welcome.
 
