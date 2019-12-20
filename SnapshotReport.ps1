@@ -23,7 +23,6 @@ function Get-SnapshotReport{
 	foreach ($VMid in $VMids){
 		$snap = $VMid.snapshot.RootSnapshotList
 		$snapevent = Get-VIEvent -Entity $VMid.Name -Types Info -Finish $snap.CreateTime -MaxSamples 1 | Where-Object 
-
 {$_.FullFormattedMessage -imatch 'Task: Create virtual machine snapshot'}
 		$SnapTotal = "" | select vCenter, OS, VM, Name, Description, Created, CreatedBy, SizeGB
 	if ($snapevent -ne $null)
@@ -80,9 +79,7 @@ Measure-Object -sum).Sum/1024/1024/1024).tostring("f2")}
 		$SnapTotal.SizeGB = ($F_size/1GB).tostring("f2")
 		}
 		Else
-		{$SnapTotal.SizeGB = ((($VMid.layoutEx.file | where {($_.name -like "*delta*") -or ($_.name -like "*sesparse*")}).Size | 
-
-Measure-Object -sum).Sum/1024/1024/1024).tostring("f2")}
+		{$SnapTotal.SizeGB = ((($VMid.layoutEx.file | where {($_.name -like "*delta*") -or ($_.name -like "*sesparse*")}).Size | Measure-Object -sum).Sum/1024/1024/1024).tostring("f2")}
 		$SnapTotal.CreatedBy = 'NA'
 		if($VMid.guest.GuestFamily -like "*win*")
 		{$SnapTotal.OS = 'Windows'}
@@ -109,9 +106,7 @@ If($VMs)
 		$VMTotal.Description = "Failed Snapshot Cleanup, Require to re-consolicate!"
 		$VMTotal.Created = "NA"
 		$VMTotal.CreatedBy = "NA"
-		$VMTotal.SizeGB = ((($VM.layoutEx.file | where {($_.Type -like "diskExtent") -and ($_.name -like "*delta*")}).Size | Measure-
-
-Object -sum).Sum/1024/1024/1024).tostring("f2")
+		$VMTotal.SizeGB = ((($VM.layoutEx.file | where {($_.Type -like "diskExtent") -and ($_.name -like "*delta*")}).Size | Measure-Object -sum).Sum/1024/1024/1024).tostring("f2")
 		$SnapReport += $VMTotal
 	}
 }
