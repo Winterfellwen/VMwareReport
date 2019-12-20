@@ -13,6 +13,6 @@ CreatedTime
 CreatedBy
 SizeGB
 
-Hope it can help any folks need it.
+Hope it can help some folks need it.
 
 
